@@ -1,6 +1,6 @@
 <div id="aurora"></div>
 
-<script client:only="js">
+<script type="module">
   import { startAurora } from "../scripts/aurora.client";
 
   const el = document.getElementById("aurora");
@@ -8,4 +8,3 @@
     startAurora(el);
   }
 </script>
-
