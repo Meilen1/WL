@@ -1,15 +1,9 @@
 import { initAurora } from "../components/AuroraScene";
 
-function start() {
-  const el = document.getElementById("aurora");
-  if (el) initAurora(el as HTMLDivElement);
-}
+const el = document.getElementById("aurora") as HTMLDivElement | null;
 
-// 🔑 CLAVE ABSOLUTA
-if (typeof window !== "undefined") {
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", start);
-  } else {
-    start();
-  }
+console.log("SCRIPT CLIENTE", el);
+
+if (el) {
+  initAurora(el);
 }

@@ -2,8 +2,10 @@
   "extends": "astro/tsconfigs/strict",
   "include": [
     ".astro/types.d.ts",
-    "src/**/*"
-, "src/scripts/aurora.client.ts"  ],
+    "src/**/*.astro",
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
   "exclude": [
     "dist",
     "node_modules"

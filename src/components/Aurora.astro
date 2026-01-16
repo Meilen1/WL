@@ -1,1 +1,10 @@
-<div id="aurora"></div>
+<div id="aurora" style="position:fixed; inset:0; z-index:-1;"></div>
+
+<script type="module">
+  import { startAurora } from "../scripts/aurora.client";
+
+  const el = document.getElementById("aurora");
+  if (el) {
+    startAurora(el);
+  }
+</script>
