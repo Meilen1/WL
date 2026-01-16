@@ -1,14 +1,18 @@
 import { initAurora } from "../components/AuroraScene";
 
+const el = document.getElementById("aurora") as HTMLDivElement | null;
+
+if (!el) {
+  console.error("❌ #aurora no encontrado");
+} else {
+  startAurora(el);
+}
+
 export function startAurora(element: HTMLDivElement) {
-  console.log("startAurora llamado con:", element);
-  
-  // Asegurarse de que el elemento tenga dimensiones
   if (element.clientWidth === 0 || element.clientHeight === 0) {
-    console.warn("El contenedor no tiene dimensiones, esperando...");
     requestAnimationFrame(() => startAurora(element));
     return;
   }
-  
+
   initAurora(element);
 }
