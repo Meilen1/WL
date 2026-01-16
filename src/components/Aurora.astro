@@ -4,7 +4,11 @@
   import { startAurora } from "../scripts/aurora.client";
 
   const el = document.getElementById("aurora");
-  if (el) {
+  console.log("Elemento encontrado:", el, "Dimensiones:", el?.clientWidth, el?.clientHeight);
+  
+  if (el instanceof HTMLDivElement) {
     startAurora(el);
+  } else {
+    console.error("Elemento #aurora no encontrado o no es un div");
   }
 </script>
