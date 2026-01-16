@@ -3,7 +3,7 @@
   "include": [
     ".astro/types.d.ts",
     "src/**/*"
-  ],
+, "src/scripts/aurora.client.ts"  ],
   "exclude": [
     "dist",
     "node_modules"

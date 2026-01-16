@@ -1,9 +1,8 @@
 ---
 import "../styles/global.css";
+import Aurora from "../components/Aurora.astro";
 ---
 
-<div id="aurora"></div>
+<Aurora />
 
-<script type="module" is:inline>
-  import "../scripts/aurora.client";
-</script>
+<script type="module" src="../scripts/aurora.client.ts"></script>

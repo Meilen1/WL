@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { auroraVertex, auroraFragment } from "./auroraShaders.ts";
+import { auroraVertex, auroraFragment } from "./auroraShaders";
 
 export function initAurora(container: HTMLDivElement) {
     console.log("INIT AURORA");
