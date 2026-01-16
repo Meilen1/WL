@@ -5,8 +5,11 @@ function start() {
   if (el) initAurora(el as HTMLDivElement);
 }
 
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", start);
-} else {
-  start();
+// 🔑 CLAVE ABSOLUTA
+if (typeof window !== "undefined") {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start);
+  } else {
+    start();
+  }
 }
