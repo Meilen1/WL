@@ -8,11 +8,12 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "astro": "^5.16.10",
     "@astrojs/vercel": "^9.0.4",
+    "astro": "^5.16.10",
     "three": "^0.182.0"
   },
   "devDependencies": {
-    "@types/three": "^0.182.0"
+    "@types/three": "^0.182.0",
+    "vercel": "^50.4.5"
   }
 }
