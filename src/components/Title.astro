@@ -1,17 +1,21 @@
 ---
 interface Props {
-  text: string;
+  title: string;
   subtitle?: string;
+  text?: string;
 }
 
-const { text, subtitle } = Astro.props;
+const { title, subtitle, text } = Astro.props;
 ---
 
 <div class="title-wrapper">
   <h1>
-    {text}
+    {title}
     {subtitle && <p class="subtitle-wrapper">{subtitle}</p>}
   </h1>
+  <div class="text">
+    <p>{text}</p>
+  </div>
 </div>
 
 <style>
@@ -54,9 +58,22 @@ const { text, subtitle } = Astro.props;
   margin: 0;
   }
 
+ .text{
+  position: fixed;          /* 🔑 CLAVE */
+  inset: 0;                 /* top/right/bottom/left = 0 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  pointer-events: none;
+  font-family: sans-serif;
+ }
+
   p {
+    text-align: center;
     opacity: 0.8;
     margin-top: 0.5rem;
+
   }
 
   .subtitle-wrapper{
