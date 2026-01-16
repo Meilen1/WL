@@ -13,5 +13,5 @@ body {
   overflow: hidden;
 
   /* SOLO para debug, después lo sacás */
-  background: red;
+  background: transparent;
 }
