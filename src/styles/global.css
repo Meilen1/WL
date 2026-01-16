@@ -7,11 +7,11 @@ body {
 }
 
 #aurora {
+  position: fixed;
   width: 100vw;
   height: 100vh;
-  position: relative;
   overflow: hidden;
-
+  inset: 0;
   /* SOLO para debug, después lo sacás */
   background: transparent;
 }

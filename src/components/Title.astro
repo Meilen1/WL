@@ -1,0 +1,67 @@
+---
+interface Props {
+  text: string;
+  subtitle?: string;
+}
+
+const { text, subtitle } = Astro.props;
+---
+
+<div class="title-wrapper">
+  <h1>
+    {text}
+    {subtitle && <p class="subtitle-wrapper">{subtitle}</p>}
+  </h1>
+</div>
+
+<style>
+@font-face {
+  font-family: "AuroraFont";
+  src: url("/fonts/Krasomila-021.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OlsenFont";
+  src: url("/fonts/AstonScript.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+
+  .title-wrapper {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: white;
+  pointer-events: none;
+  }
+
+  h1 {
+  position: relative;
+  display: inline-block; /* 🔑 CLAVE */
+  font-family: "AuroraFont", sans-serif;
+  font-size: 3rem;
+  margin: 0;
+  }
+
+  p {
+    opacity: 0.8;
+    margin-top: 0.5rem;
+  }
+
+  .subtitle-wrapper{
+  position: absolute;
+  right: -1rem;        
+  bottom: -3rem;
+  font-family: "OlsenFont", sans-serif;
+  font-size: 1.1rem;
+  opacity: 0.85;
+  white-space: nowrap;
+  }
+</style>
