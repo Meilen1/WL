@@ -14,9 +14,14 @@ const { title, subtitle, text } = Astro.props;
     {subtitle && <p class="subtitle-wrapper">{subtitle}</p>}
   </h1>
   <div class="text">
-    <p>{text}</p>
+    <p id="typewriter" data-text={text}></p>
+    <button id="startTyping">Comenzar</button>
   </div>
 </div>
+
+<script>
+  import "../scripts/typewrite.client";
+</script>
 
 <style>
 @font-face {
@@ -52,18 +57,20 @@ const { title, subtitle, text } = Astro.props;
 
   h1 {
   position: relative;
-  display: inline-block; /* 🔑 CLAVE */
+  display: inline-block;
   font-family: "AuroraFont", sans-serif;
   font-size: 5rem;
   margin: 0;
   }
 
  .text{
-  position: fixed;          /* 🔑 CLAVE */
-  inset: 0;                 /* top/right/bottom/left = 0 */
+  position: fixed;         
+  inset: 0; /* top/right/bottom/left = 0 */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
   z-index: 1;
   pointer-events: none;
   font-family: sans-serif;
@@ -85,4 +92,14 @@ const { title, subtitle, text } = Astro.props;
   opacity: 0.85;
   white-space: nowrap;
   }
+
+
+#typewriter,
+#startTyping {
+  transition: opacity 0.5s ease;
+  pointer-events: auto;
+}
+
+
+
 </style>

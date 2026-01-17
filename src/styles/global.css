@@ -15,3 +15,21 @@ body {
   /* SOLO para debug, después lo sacás */
   background: transparent;
 }
+
+
+button{
+  font-family: sans-serif;
+  background-color: transparent;
+  border-color: aliceblue;
+  border-radius: 5px;
+  height: 2.5rem;
+  width: 5.5rem;
+  color: aliceblue;
+  transition: color 2s ease;
+}
+
+button:hover{
+  color: rgb(198, 173, 255);
+  /* text-shadow: 0 1px 2px rgb(234, 0, 255); */
+  
+}

@@ -10,7 +10,8 @@
   "dependencies": {
     "@astrojs/vercel": "^9.0.4",
     "astro": "^5.16.10",
-    "three": "^0.182.0"
+    "three": "^0.182.0",
+    "typeit": "^8.8.7"
   },
   "devDependencies": {
     "@types/three": "^0.182.0",
