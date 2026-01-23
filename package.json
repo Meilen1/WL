@@ -8,12 +8,16 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/react": "^4.4.2",
     "@astrojs/vercel": "^9.0.4",
     "astro": "^5.16.10",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
     "three": "^0.182.0",
     "typeit": "^8.8.7"
   },
   "devDependencies": {
+    "@types/react": "^19.2.8",
     "@types/three": "^0.182.0",
     "vercel": "^50.4.5"
   }
