@@ -35,6 +35,8 @@ export default function Quiz() {
   }, []);
 
 useEffect(() => {
+  let cancelled = false;
+
   fetch(`${API_URL}/api/auth/me`, {
     credentials: "include"
   })
@@ -43,13 +45,20 @@ useEffect(() => {
       return res.json();
     })
     .then(user => {
+      if (cancelled) return;
       setDiscordId(user.discordId);
       setAuthChecked(true);
     })
     .catch(() => {
-      window.location.href = `${API_URL}/auth/discord/login`;
+      if (cancelled) return;
+      setAuthChecked(true); // 👈 IMPORTANTE
     });
+
+  return () => {
+    cancelled = true;
+  };
 }, []);
+
 
  
   if (loading) {
@@ -72,6 +81,23 @@ useEffect(() => {
   return (
     <div style={wrapperStyle}>
       <p>Verificando usuario...</p>
+    </div>
+  );
+}
+
+if (!discordId) {
+  return (
+    <div style={wrapperStyle}>
+      <p>Necesitás iniciar sesión con Discord para continuar.</p>
+
+      <button
+        type="button"
+        onClick={() => {
+          window.location.href = `${API_URL}/auth/discord/login`;
+        }}
+      >
+        Iniciar sesión con Discord
+      </button>
     </div>
   );
 }
