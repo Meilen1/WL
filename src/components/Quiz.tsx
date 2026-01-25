@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Question } from "../types/Question";
 
-const API_URL = "https://competitions-noon-disciplines-initiative.trycloudflare.com";
+const API_URL = "https://complex-warnings-synthetic-destination.trycloudflare.com";
 
 export default function Quiz() {
   const [questions, setQuestions] = useState<Question[]>([]);
