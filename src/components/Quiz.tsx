@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Question } from "../types/Question";
 
-const API_URL = "http://192.168.1.39:8080";
+const API_URL = "https://sydney-houston-resident-choosing.trycloudflare.com";
 
 export default function Quiz() {
   const [questions, setQuestions] = useState<Question[]>([]);
