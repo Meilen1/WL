@@ -16,34 +16,18 @@ export default function Quiz() {
  
   useEffect(() => {
     fetch(`${API_URL}/api/preguntas`)
-      .then(res => {
-        if (!res.ok) throw new Error("Error al cargar preguntas");
-        return res.json();
-      })
-      .then((rows) => {
-        const map = new Map<number, Question>();
-
-        rows.forEach((r: any) => {
-          if (!map.has(r.question_id)) {
-            map.set(r.question_id, {
-              id: r.question_id,
-              text: r.question_text,
-              options: [],
-            });
-          }
-
-          map.get(r.question_id)!.options.push({
-            id: r.answer_id,
-            text: r.answer_text,
-          });
-        });
-
-        setQuestions(Array.from(map.values()));
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setError("No se pudieron cargar las preguntas");
+      .then(res => res.json())
+      .then((data) => {
+        setQuestions(
+          data.map((q: any) => ({
+            id: q.id,
+            text: q.question,
+            options: q.answers.map((a: any) => ({
+              id: a.id,
+              text: a.text,
+            })),
+          }))
+        );
         setLoading(false);
       });
   }, []);
