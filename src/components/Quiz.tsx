@@ -11,37 +11,67 @@ export default function Quiz() {
   const [finished, setFinished] = useState(false);
   const [name, setName] = useState("");
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // 🔹 Traer preguntas
- useEffect(() => {
-  fetch("https://sydney-houston-resident-choosing.trycloudflare.com/api/preguntas")
-    .then(res => res.json())
-    .then((rows) => {
-      const map = new Map<number, Question>();
+ 
+  useEffect(() => {
+    fetch(`${API_URL}/api/preguntas`)
+      .then(res => {
+        if (!res.ok) throw new Error("Error al cargar preguntas");
+        return res.json();
+      })
+      .then((rows) => {
+        const map = new Map<number, Question>();
 
-      rows.forEach((r: any) => {
-        if (!map.has(r.question_id)) {
-          map.set(r.question_id, {
-            id: r.question_id,
-            text: r.question_text,
-            options: [],
+        rows.forEach((r: any) => {
+          if (!map.has(r.question_id)) {
+            map.set(r.question_id, {
+              id: r.question_id,
+              text: r.question_text,
+              options: [],
+            });
+          }
+
+          map.get(r.question_id)!.options.push({
+            id: r.answer_id,
+            text: r.answer_text,
           });
-        }
-
-        map.get(r.question_id)!.options.push({
-          id: r.answer_id,
-          text: r.answer_text,
         });
+
+        setQuestions(Array.from(map.values()));
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setError("No se pudieron cargar las preguntas");
+        setLoading(false);
       });
+  }, []);
 
-      setQuestions(Array.from(map.values()));
-      setLoading(false);
-    });
-}, []);
+ 
+  if (loading) {
+    return (
+      <div style={wrapperStyle}>
+        <p>Cargando preguntas...</p>
+      </div>
+    );
+  }
 
+  if (error) {
+    return (
+      <div style={wrapperStyle}>
+        <p>{error}</p>
+      </div>
+    );
+  }
 
-  if (loading) return <p>Cargando preguntas...</p>;
-  if (!questions.length) return <p>No hay preguntas.</p>;
+  if (!questions.length) {
+    return (
+      <div style={wrapperStyle}>
+        <p>No hay preguntas disponibles.</p>
+      </div>
+    );
+  }
 
   const current = questions[currentIndex];
 
@@ -63,9 +93,7 @@ export default function Quiz() {
   const submitResults = async () => {
     await fetch(`${API_URL}/api/resultados`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
         answers,
@@ -75,35 +103,37 @@ export default function Quiz() {
     setSent(true);
   };
 
-  // 🔚 Pantalla final
+  
   if (finished) {
-    if (sent) {
-      return <h2>Gracias por participar 🎉</h2>;
-    }
-
     return (
-      <div>
-        <h2>Completaste el cuestionario</h2>
+      <div style={wrapperStyle}>
+        {sent ? (
+          <h2>Gracias.</h2>
+        ) : (
+          <>
+            <h2>Completaste el cuestionario</h2>
 
-        <input
-          type="text"
-          placeholder="Ingresá tu nombre"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
+            <input
+              type="text"
+              placeholder="Ingresá tu nombre"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
 
-        <br /><br />
+            <br /><br />
 
-        <button disabled={!name} onClick={submitResults}>
-          Enviar resultado
-        </button>
+            <button disabled={!name} onClick={submitResults}>
+              Enviar resultado
+            </button>
+          </>
+        )}
       </div>
     );
   }
 
-  // 🧠 Pregunta actual
+  
   return (
-    <div>
+    <div style={wrapperStyle}>
       <h3>
         Pregunta {currentIndex + 1} / {questions.length}
       </h3>
@@ -111,14 +141,14 @@ export default function Quiz() {
       <p>{current.text}</p>
 
       {current.options.map(opt => (
-        <label key={opt.id} style={{ display: "block" }}>
+        <label key={opt.id} style={{ display: "block", marginBottom: 8 }}>
           <input
             type="radio"
             name={`question-${current.id}`}
             checked={answers[current.id] === opt.id}
             onChange={() => selectAnswer(opt.id)}
           />
-          {opt.text}
+          {" "}{opt.text}
         </label>
       ))}
 
@@ -135,3 +165,15 @@ export default function Quiz() {
     </div>
   );
 }
+
+
+const wrapperStyle: React.CSSProperties = {
+  position: "relative",
+  zIndex: 10,
+  color: "white",
+  maxWidth: 600,
+  margin: "0 auto",
+  background: "rgba(0,0,0,0.4)",
+  padding: 20,
+  borderRadius: 12,
+};
