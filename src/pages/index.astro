@@ -1,39 +1,42 @@
 ---
 import Aurora from "../components/Aurora.astro";
 import "../styles/global.css";
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
 import Title from "../components/Title.astro";
 import Quiz from "../components/Quiz";
 ---
 
 <Layout>
-  <Aurora/>
+  <Aurora />
 
-  <div id="title-root">
-    <Title
-      title="AURORA"
-      subtitle="Olsen"
-      text="Whitelist muy pronto, 25 de Enero 2026 a las 00hs"
-    />
-  </div>
+  <Title
+    title="AURORA"
+    subtitle="Olsen"
+    text="Whitelist muy pronto, 25 de Enero 2026 a las 00hs"
+  />
 
-  
-  <div id="quiz-root" hidden>
-    <Quiz client:load />
-  </div>
+
+  <div id="quiz-root"></div>
 </Layout>
 
-<script>
+<script type="module">
+  import { mount } from "astro/client";
+
   document.addEventListener("DOMContentLoaded", () => {
     const btn = document.getElementById("startTyping");
-    const title = document.getElementById("title-root");
-    const quiz = document.getElementById("quiz-root");
+    const quizRoot = document.getElementById("quiz-root");
 
-    if (!btn || !quiz || !title) return;
+    if (!btn || !quizRoot) return;
 
-    btn.addEventListener("click", () => {
-      title.style.display = "none";
-      quiz.hidden = false;
+    btn.addEventListener("click", async () => {
+      if (quizRoot.dataset.mounted) return;
+      quizRoot.dataset.mounted = "true";
+
+      const { default: Quiz } = await import("../components/Quiz.tsx");
+
+      mount(Quiz, {
+        target: quizRoot,
+      });
     });
   });
 </script>
