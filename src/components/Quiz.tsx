@@ -9,9 +9,11 @@ export default function Quiz() {
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [loading, setLoading] = useState(true);
   const [finished, setFinished] = useState(false);
-  const [name, setName] = useState("");
+  const [discordId, setDiscordId] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [authChecked, setAuthChecked] = useState(false);
+
 
  
   useEffect(() => {
@@ -32,6 +34,23 @@ export default function Quiz() {
       });
   }, []);
 
+useEffect(() => {
+  fetch(`${API_URL}/api/auth/me`, {
+    credentials: "include"
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("No autenticado");
+      return res.json();
+    })
+    .then(user => {
+      setDiscordId(user.discordId);
+      setAuthChecked(true);
+    })
+    .catch(() => {
+      window.location.href = `${API_URL}/auth/discord/login`;
+    });
+}, []);
+
  
   if (loading) {
     return (
@@ -48,6 +67,14 @@ export default function Quiz() {
       </div>
     );
   }
+
+    if (!authChecked) {
+  return (
+    <div style={wrapperStyle}>
+      <p>Verificando usuario...</p>
+    </div>
+  );
+}
 
   if (!questions.length) {
     return (
@@ -75,14 +102,14 @@ export default function Quiz() {
   };
 
 const submitResults = async () => {
-  if (sent) return;
+  if (sent || !discordId) return;
 
   try {
     await fetch(`${API_URL}/api/Preguntas/resultados`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        name,
+        discordId,
         answers,
       }),
     });
@@ -103,16 +130,11 @@ const submitResults = async () => {
           <>
             <h2>Completaste el cuestionario</h2>
 
-            <input
-              type="text"
-              placeholder="Ingresá tu nombre"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
+
 
             <br /><br />
 
-            <button disabled={!name} onClick={submitResults}>
+            <button disabled={!discordId} onClick={submitResults}>
               Enviar resultado
             </button>
           </>
@@ -120,6 +142,8 @@ const submitResults = async () => {
       </div>
     );
   }
+
+
 
   
   return (
