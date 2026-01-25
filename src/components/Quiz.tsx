@@ -133,12 +133,12 @@ export default function Quiz() {
 
   
   return (
-    <div className="quiz-wrapper">
-      <h3 className="quiz-title">
+    <div className="quiz-layer">
+      <h3>
         Pregunta {currentIndex + 1} / {questions.length}
       </h3>
 
-      <p className="quiz-question">{current.text}</p>
+      <p className="quiz-text">{current.text}</p>
 
       {current.options.map(opt => (
         <label key={opt.id} className="quiz-option">
@@ -152,17 +152,17 @@ export default function Quiz() {
         </label>
       ))}
 
+      <br />
+
       <button
         disabled={answers[current.id] == null}
         onClick={next}
-        className="quiz-button"
       >
-        {currentIndex + 1 === questions.length
-          ? "Finalizar"
-          : "Siguiente"}
+        {currentIndex + 1 === questions.length ? "Finalizar" : "Siguiente"}
       </button>
     </div>
   );
+
 
 }
 

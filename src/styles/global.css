@@ -33,3 +33,28 @@ button:hover{
   /* text-shadow: 0 1px 2px rgb(234, 0, 255); */
   
 }
+
+.quiz-layer {
+  position: relative;
+  z-index: 10; /* por encima del canvas */
+  color: aliceblue;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.quiz-text {
+  color: aliceblue;
+  margin-bottom: 1rem;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: aliceblue;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-option span {
+  color: aliceblue;
+}
