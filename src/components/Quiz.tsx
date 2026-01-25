@@ -74,7 +74,10 @@ export default function Quiz() {
     }
   };
 
-  const submitResults = async () => {
+const submitResults = async () => {
+  if (sent) return;
+
+  try {
     await fetch(`${API_URL}/api/resultados`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -85,7 +88,10 @@ export default function Quiz() {
     });
 
     setSent(true);
-  };
+  } catch {
+    setError("No se pudo enviar el resultado");
+  }
+};
 
   
   if (finished) {
