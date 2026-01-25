@@ -133,30 +133,29 @@ export default function Quiz() {
 
   
   return (
-    <div style={wrapperStyle}>
-      <h3>
+    <div className="quiz-wrapper">
+      <h3 className="quiz-title">
         Pregunta {currentIndex + 1} / {questions.length}
       </h3>
 
-      <p>{current.text}</p>
+      <p className="quiz-question">{current.text}</p>
 
       {current.options.map(opt => (
-        <label key={opt.id} style={{ display: "block", marginBottom: 8 }}>
+        <label key={opt.id} className="quiz-option">
           <input
             type="radio"
             name={`question-${current.id}`}
             checked={answers[current.id] === opt.id}
             onChange={() => selectAnswer(opt.id)}
           />
-          {" "}{opt.text}
+          <span>{opt.text}</span>
         </label>
       ))}
-
-      <br />
 
       <button
         disabled={answers[current.id] == null}
         onClick={next}
+        className="quiz-button"
       >
         {currentIndex + 1 === questions.length
           ? "Finalizar"
@@ -164,6 +163,7 @@ export default function Quiz() {
       </button>
     </div>
   );
+
 }
 
 
