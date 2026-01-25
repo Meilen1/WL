@@ -1,66 +1,119 @@
 import { useEffect, useState } from "react";
 import type { Question } from "../types/Question";
 
+const API_URL = "http://192.168.1.39:8080";
+
 export default function Quiz() {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<number, number>>({});
   const [loading, setLoading] = useState(true);
+  const [finished, setFinished] = useState(false);
+  const [name, setName] = useState("");
+  const [sent, setSent] = useState(false);
 
+  // 🔹 Traer preguntas
   useEffect(() => {
-    fetch("http://localhost:5000/api/questions", {
-      method: "POST",
-    })
+    fetch(`${API_URL}/api/preguntas`)
       .then(res => res.json())
       .then(data => {
-        setQuestions(data.questions);
+        setQuestions(data);
         setLoading(false);
-      });
+      })
+      .catch(() => setLoading(false));
   }, []);
 
-  const selectAnswer = (questionId: number, optionId: number) => {
+  if (loading) return <p>Cargando preguntas...</p>;
+  if (!questions.length) return <p>No hay preguntas.</p>;
+
+  const current = questions[currentIndex];
+
+  const selectAnswer = (optionId: number) => {
     setAnswers(prev => ({
       ...prev,
-      [questionId]: optionId,
+      [current.id]: optionId,
     }));
   };
 
-  const submit = () => {
-    console.log("Respuestas:", answers);
-
-    fetch("http://localhost:5000/api/answers", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(answers),
-    });
+  const next = () => {
+    if (currentIndex + 1 < questions.length) {
+      setCurrentIndex(i => i + 1);
+    } else {
+      setFinished(true);
+    }
   };
 
-  if (loading) return <p>Cargando preguntas...</p>;
+  const submitResults = async () => {
+    await fetch(`${API_URL}/api/resultados`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        answers,
+      }),
+    });
 
+    setSent(true);
+  };
+
+  // 🔚 Pantalla final
+  if (finished) {
+    if (sent) {
+      return <h2>Gracias por participar 🎉</h2>;
+    }
+
+    return (
+      <div>
+        <h2>Completaste el cuestionario</h2>
+
+        <input
+          type="text"
+          placeholder="Ingresá tu nombre"
+          value={name}
+          onChange={e => setName(e.target.value)}
+        />
+
+        <br /><br />
+
+        <button disabled={!name} onClick={submitResults}>
+          Enviar resultado
+        </button>
+      </div>
+    );
+  }
+
+  // 🧠 Pregunta actual
   return (
     <div>
-      {questions.map(q => (
-        <div key={q.id} style={{ marginBottom: "1.5rem" }}>
-          <h3>{q.text}</h3>
+      <h3>
+        Pregunta {currentIndex + 1} / {questions.length}
+      </h3>
 
-          {q.options.map(opt => (
-            <label key={opt.id} style={{ display: "block" }}>
-              <input
-                type="radio"
-                name={`question-${q.id}`}
-                checked={answers[q.id] === opt.id}
-                onChange={() => selectAnswer(q.id, opt.id)}
-              />
-              {opt.text}
-            </label>
-          ))}
-        </div>
+      <p>{current.text}</p>
+
+      {current.options.map(opt => (
+        <label key={opt.id} style={{ display: "block" }}>
+          <input
+            type="radio"
+            name={`question-${current.id}`}
+            checked={answers[current.id] === opt.id}
+            onChange={() => selectAnswer(opt.id)}
+          />
+          {opt.text}
+        </label>
       ))}
 
+      <br />
+
       <button
-        disabled={Object.keys(answers).length !== questions.length}
-        onClick={submit}
+        disabled={answers[current.id] == null}
+        onClick={next}
       >
-        Enviar respuestas
+        {currentIndex + 1 === questions.length
+          ? "Finalizar"
+          : "Siguiente"}
       </button>
     </div>
   );
