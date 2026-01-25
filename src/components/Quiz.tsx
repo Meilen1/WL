@@ -15,7 +15,7 @@ export default function Quiz() {
 
  
   useEffect(() => {
-    fetch(`${API_URL}/api/preguntas`)
+    fetch(`${API_URL}/api/Preguntas/preguntas`)
       .then(res => res.json())
       .then((data) => {
         setQuestions(
@@ -78,7 +78,7 @@ const submitResults = async () => {
   if (sent) return;
 
   try {
-    await fetch(`${API_URL}/api/resultados`, {
+    await fetch(`${API_URL}/api/Preguntas/resultados`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
