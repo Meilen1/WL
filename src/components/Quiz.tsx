@@ -13,15 +13,32 @@ export default function Quiz() {
   const [sent, setSent] = useState(false);
 
   // 🔹 Traer preguntas
-  useEffect(() => {
-    fetch(`${API_URL}/api/preguntas`)
-      .then(res => res.json())
-      .then(data => {
-        setQuestions(data);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, []);
+ useEffect(() => {
+  fetch("https://sydney-houston-resident-choosing.trycloudflare.com/api/preguntas")
+    .then(res => res.json())
+    .then((rows) => {
+      const map = new Map<number, Question>();
+
+      rows.forEach((r: any) => {
+        if (!map.has(r.question_id)) {
+          map.set(r.question_id, {
+            id: r.question_id,
+            text: r.question_text,
+            options: [],
+          });
+        }
+
+        map.get(r.question_id)!.options.push({
+          id: r.answer_id,
+          text: r.answer_text,
+        });
+      });
+
+      setQuestions(Array.from(map.values()));
+      setLoading(false);
+    });
+}, []);
+
 
   if (loading) return <p>Cargando preguntas...</p>;
   if (!questions.length) return <p>No hay preguntas.</p>;
