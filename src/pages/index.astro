@@ -6,9 +6,34 @@ import Title from "../components/Title.astro";
 import Quiz from "../components/Quiz";
 ---
 
-
 <Layout>
-    <Aurora/>
-    <Title title="AURORA" subtitle="Olsen" text="Whitelist muy pronto, 25 de Enero 2026 a las 00hs" />
+  <Aurora/>
+
+  <div id="title-root">
+    <Title
+      title="AURORA"
+      subtitle="Olsen"
+      text="Whitelist muy pronto, 25 de Enero 2026 a las 00hs"
+    />
+  </div>
+
+  
+  <div id="quiz-root" hidden>
     <Quiz client:load />
+  </div>
 </Layout>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("startTyping");
+    const title = document.getElementById("title-root");
+    const quiz = document.getElementById("quiz-root");
+
+    if (!btn || !quiz || !title) return;
+
+    btn.addEventListener("click", () => {
+      title.style.display = "none";
+      quiz.hidden = false;
+    });
+  });
+</script>
