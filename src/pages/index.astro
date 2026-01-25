@@ -3,7 +3,7 @@ import Aurora from "../components/Aurora.astro";
 import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 import Title from "../components/Title.astro";
-import Quiz from "../components/Quiz";
+import QuizGate from "../components/QuizGate";
 ---
 
 <Layout>
@@ -15,28 +15,6 @@ import Quiz from "../components/Quiz";
     text="Whitelist muy pronto, 25 de Enero 2026 a las 00hs"
   />
 
-
-  <div id="quiz-root"></div>
+  <!-- 👇 Se hidrata pero NO renderiza nada hasta click -->
+  <QuizGate client:load />
 </Layout>
-
-<script type="module">
-  import { mount } from "astro/client";
-
-  document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("startTyping");
-    const quizRoot = document.getElementById("quiz-root");
-
-    if (!btn || !quizRoot) return;
-
-    btn.addEventListener("click", async () => {
-      if (quizRoot.dataset.mounted) return;
-      quizRoot.dataset.mounted = "true";
-
-      const { default: Quiz } = await import("../components/Quiz.tsx");
-
-      mount(Quiz, {
-        target: quizRoot,
-      });
-    });
-  });
-</script>
