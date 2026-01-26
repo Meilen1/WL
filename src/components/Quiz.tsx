@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Question } from "../types/Question";
 
-const API_URL = "https://changes-comfort-exercise-did.trycloudflare.com";
+const API_URL = "https://org-maternity-villas-faster.trycloudflare.com"; //esto cambia cuando cierro el tunnel. volver a usar cloudflared tunnel --url hhtp://localhost:8080 en la raspberry
 
 export default function Quiz() {
   const [questions, setQuestions] = useState<Question[]>([]);
