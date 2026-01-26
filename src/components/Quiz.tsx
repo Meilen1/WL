@@ -107,18 +107,13 @@ useEffect(() => {
 }
 
 if (!discordId) {
+  setTimeout(() => {
+    window.location.href = `${API_URL}/auth/discord/login`;
+  }, 800);
+
   return (
     <div style={wrapperStyle}>
-      <p>Necesitás iniciar sesión con Discord para continuar.</p>
-
-      <button
-        type="button"
-        onClick={() => {
-          window.location.href = `${API_URL}/auth/discord/login`;
-        }}
-      >
-        Iniciar sesión con Discord
-      </button>
+      <p>Conectando con Discord…</p>
     </div>
   );
 }
