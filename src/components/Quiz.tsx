@@ -15,6 +15,16 @@ export default function Quiz() {
   const [authChecked, setAuthChecked] = useState(false);
 
 
+useEffect(() => {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get("token");
+
+  if (token) {
+    localStorage.setItem("auth_token", token);
+    window.history.replaceState({}, "", "/"); // limpia ?token
+  }
+}, []);
+
  
   useEffect(() => {
     fetch(`${API_URL}/api/Preguntas/preguntas`)
@@ -37,8 +47,17 @@ export default function Quiz() {
 useEffect(() => {
   let cancelled = false;
 
+  const token = localStorage.getItem("auth_token");
+
+  if (!token) {
+    setAuthChecked(true);
+    return;
+  }
+
   fetch(`${API_URL}/api/auth/me`, {
-    credentials: "include"
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   })
     .then(res => {
       if (!res.ok) throw new Error("No autenticado");
@@ -51,13 +70,15 @@ useEffect(() => {
     })
     .catch(() => {
       if (cancelled) return;
-      setAuthChecked(true); // 👈 IMPORTANTE
+      localStorage.removeItem("auth_token");
+      setAuthChecked(true);
     });
 
   return () => {
     cancelled = true;
   };
 }, []);
+
 
 
  
@@ -131,14 +152,19 @@ const submitResults = async () => {
   if (sent || !discordId) return;
 
   try {
-    await fetch(`${API_URL}/api/Preguntas/resultados`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        discordId,
-        answers,
-      }),
-    });
+const token = localStorage.getItem("auth_token");
+
+await fetch(`${API_URL}/api/Preguntas/resultados`, {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+  body: JSON.stringify({
+    answers,
+  }),
+});
+
 
     setSent(true);
   } catch {
