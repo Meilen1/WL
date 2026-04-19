@@ -3,27 +3,28 @@ import TypeIt from "typeit";
 const el = document.getElementById("typewriter");
 const button = document.getElementById("startTyping");
 
-if (el) {
+if (el && button) {
   const text = el.getAttribute("data-text") ?? "";
 
-  
-  new TypeIt(el, {
-    strings: text,
-    speed: 50,
-    cursor: true,
-    waitUntilVisible: true,
-  }).go();
-}
+let instance: TypeIt | null = null;
 
-if (el && button) {
-    button.addEventListener("click", () => {
-    el.style.opacity = "0";
-    button.style.opacity = "0";
+  button.addEventListener("click", () => {
+    if (instance) return; // evita múltiples clicks
 
-    setTimeout(() => {
-        el.style.display = "none";
-        button.style.display = "none";
-    }, 500);
+    // crear instancia recién al hacer click
+    instance = new TypeIt(el, {
+      strings: text,
+      speed: 50,
+      cursor: true,
+      waitUntilVisible: true,
     });
 
+    instance.go();
+
+    // opcional: ocultar botón
+    button.style.opacity = "0";
+    setTimeout(() => {
+      button.style.display = "none";
+    }, 500);
+  });
 }

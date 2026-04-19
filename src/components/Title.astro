@@ -15,7 +15,7 @@ const { title, subtitle, text } = Astro.props;
   </h1>
   <div class="text">
     <p id="typewriter" data-text={text}></p>
-    <button id="startTyping" type="button">. . .</button>
+    <button id="startTyping" type="button">EL AHOGAMIENTO</button>
   </div>
 </div>
 
@@ -41,19 +41,23 @@ const { title, subtitle, text } = Astro.props;
 }
 
 
+#typewriter {
+  white-space: pre-line;
+  max-width: 700px;
+  line-height: 1.7;
+  text-align: left;
+}
 
-
-  .title-wrapper {
-  position: relative;
-  height: 500px;
+.title-wrapper {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1;
+  flex-direction: column;   /* 👈 clave */
+  justify-content: center;  /* centra verticalmente el bloque */
+  align-items: center;      /* centra horizontalmente */
   text-align: center;
   color: white;
-  pointer-events: none;
-  }
+  z-index: 1;
+}
 
   h1 {
   position: relative;
@@ -64,8 +68,10 @@ const { title, subtitle, text } = Astro.props;
   }
 
  .text{
-  position: fixed;         
+  position: relative;         
   inset: 0; /* top/right/bottom/left = 0 */
+  margin-top: 2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,7 +92,7 @@ const { title, subtitle, text } = Astro.props;
   .subtitle-wrapper{
   position: absolute;
   right: -1rem;        
-  bottom: -2rem;
+  bottom: -2.5rem;
   font-family: "OlsenFont", sans-serif;
   font-size: 1rem;
   opacity: 0.85;
@@ -98,6 +104,8 @@ const { title, subtitle, text } = Astro.props;
 #startTyping {
   transition: opacity 0.5s ease;
   pointer-events: auto;
+  width: 120%;
+  height: 12px%;
 }
 
 
