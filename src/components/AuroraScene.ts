@@ -14,7 +14,7 @@ const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -50, 50);
   container.appendChild(renderer.domElement);
 
   // Fondo "noche"
-  scene.background = new THREE.Color(0x2a0000);
+  scene.background = new THREE.Color(0x120024);
 
   // Plano que ocupa la pantalla
   const geometry = new THREE.PlaneGeometry(2, 2);

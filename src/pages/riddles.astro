@@ -1,0 +1,185 @@
+---
+import Aurora from "../components/Aurora.astro";
+import Layout from "../layouts/Layout.astro";
+import RiddleSection from "../components/RiddleSection";
+import { RIDDLES } from "../data/riddles";
+---
+
+<Layout>
+  <Aurora />
+
+  <main class="riddle-page">
+    <h1 class="riddle-title">Lo que hay</h1>
+    <p class="riddle-subtitle">en mi mente..</p>
+
+    <RiddleSection riddles={RIDDLES} client:load />
+  </main>
+</Layout>
+
+<style>
+  @font-face {
+    font-family: "AuroraFont";
+    src: url("/fonts/Rosehot.ttf") format("truetype");
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "OlsenFont";
+    src: url("/fonts/AstonScript.ttf") format("truetype");
+    font-display: swap;
+  }
+
+  .riddle-page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    padding: 3rem 1rem;
+    color: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .riddle-title {
+    font-family: "AuroraFont", sans-serif;
+    font-size: 4rem;
+    margin: 0;
+    text-align: center;
+  }
+
+  .riddle-subtitle {
+    font-family: "OlsenFont", sans-serif;
+    font-size: 1.2rem;
+    opacity: 0.8;
+    margin: -1.5rem 0 0;
+  }
+
+  :global(.riddle-section) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  :global(.riddle-list) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+  }
+
+  :global(.riddle-item) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  :global(.riddle-btn) {
+    font-family: sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: white;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 0.6rem 2rem;
+    cursor: pointer;
+    transition: border-color 0.3s, opacity 0.3s;
+    opacity: 0.85;
+  }
+
+  :global(.riddle-btn:hover) {
+    border-color: rgba(255, 255, 255, 0.9);
+    opacity: 1;
+  }
+
+  :global(.riddle-text) {
+    max-width: 700px;
+    line-height: 1.7;
+    text-align: left;
+    opacity: 0.85;
+    font-family: sans-serif;
+    font-size: 0.95rem;
+    white-space: pre-line;
+    padding: 0 1rem;
+  }
+
+  :global(.password-area) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  :global(.password-box) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    padding-bottom: 0.3rem;
+    transition: border-color 0.3s;
+    width: 300px;
+  }
+
+  :global(.password-box:focus-within) {
+    border-color: rgba(255, 255, 255, 0.9);
+  }
+
+  :global(.password-input) {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    width: 200px;
+    text-align: center;
+  }
+
+  :global(.password-input::placeholder) {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  :global(.password-submit) {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 0;
+  }
+
+  :global(.password-submit:hover) { color: white; }
+
+  :global(.password-error) {
+    font-size: 0.75rem;
+    opacity: 0.6;
+    letter-spacing: 0.1em;
+    color: #ffaaaa;
+    margin: 0;
+  }
+
+  :global(.password-done) {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+  }
+
+  :global(.shake) { animation: shake 0.4s ease; }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%       { transform: translateX(-6px); }
+    40%       { transform: translateX(6px); }
+    60%       { transform: translateX(-4px); }
+    80%       { transform: translateX(4px); }
+  }
+</style>
