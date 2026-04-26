@@ -25,7 +25,7 @@ const material = new THREE.ShaderMaterial({
   transparent: true,
   depthWrite: false,
   blending: THREE.AdditiveBlending,
-  glslVersion: THREE.GLSL1, // 🔥 CLAVE
+  glslVersion: THREE.GLSL1, 
   uniforms: {
     uTime: { value: 0 },
     uResolution: {
