@@ -66,17 +66,23 @@ export default function RiddleSection({ riddles }: Props) {
   const allDone       = unlockedCount > riddles.length;
   const currentRiddle = riddles[unlockedCount - 1];
 
-  const handleSubmit = () => {
-    if (!currentRiddle) return;
-    if (input.trim().toLowerCase() === currentRiddle.password.toLowerCase()) {
-      setUnlockedCount((n) => n + 1);
-      setInput("");
-      setError(false);
-    } else {
-      setError(true);
-      setTimeout(() => setError(false), 1500);
-    }
-  };
+const handleSubmit = async () => {
+  if (!currentRiddle) return;
+  const h = new TextEncoder().encode(input.trim().toLowerCase());
+  const buf = await crypto.subtle.digest("SHA-256", h);
+  const hash = Array.from(new Uint8Array(buf))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  if (hash === currentRiddle.password) {
+    setUnlockedCount((n) => n + 1);
+    setInput("");
+    setError(false);
+  } else {
+    setError(true);
+    setTimeout(() => setError(false), 1500);
+  }
+};
 
   return (
     <div className="riddle-section">

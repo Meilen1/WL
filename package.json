@@ -11,6 +11,7 @@
     "@astrojs/react": "^4.4.2",
     "@astrojs/vercel": "^9.0.4",
     "astro": "^5.16.10",
+    "ohash": "^2.0.11",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "three": "^0.182.0",
