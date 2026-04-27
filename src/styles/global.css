@@ -1,4 +1,8 @@
-html,
+* {
+  cursor: url('/images/key.png') 8 24, auto;
+}
+
+/* html,
 body {
   margin: 0;
   padding: 0;
@@ -12,12 +16,12 @@ body {
   height: 100vh;
   overflow: hidden;
   inset: 0;
-  /* SOLO para debug, después lo sacás */
+ 
   background: transparent;
-}
+} */
 
 
-button{
+/* button{
   font-family: sans-serif;
   background-color: transparent;
   border-color: aliceblue;
@@ -30,13 +34,13 @@ button{
 
 button:hover{
   color: rgb(198, 173, 255);
-  /* text-shadow: 0 1px 2px rgb(234, 0, 255); */
-  
-}
 
-.quiz-layer {
+  
+} */
+
+/* .quiz-layer {
   position: relative;
-  z-index: 10; /* por encima del canvas */
+  z-index: 10; 
   color: aliceblue;
   max-width: 520px;
   margin: 0 auto;
@@ -57,4 +61,4 @@ button:hover{
 
 .quiz-option span {
   color: aliceblue;
-}
+} */

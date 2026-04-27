@@ -47,7 +47,21 @@ function RiddleButton({
       >
         {riddle.buttonLabel}
       </button>
-      {isOpen && <p className="riddle-text">{text}</p>}
+      {isOpen && <p className="riddle-text"    
+      style={
+      riddle.background
+        ? {
+            backgroundImage: `url(${riddle.background})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            padding: "2rem",
+            borderRadius: "8px",
+          }
+        : undefined
+    }
+  >
+    {text}
+    </p>}
     </div>
   );
 }
@@ -62,6 +76,10 @@ export default function RiddleSection({ riddles }: Props) {
   const [openIndex, setOpenIndex]         = useState<number | null>(null);
   const [input, setInput]                 = useState("");
   const [error, setError]                 = useState(false);
+  const [audioPlayed, setAudioPlayed]     = useState(false);
+
+
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const allDone       = unlockedCount > riddles.length;
   const currentRiddle = riddles[unlockedCount - 1];
@@ -75,6 +93,14 @@ const handleSubmit = async () => {
     .join("");
 
   if (hash === currentRiddle.password) {
+      if (audioRef.current && !audioPlayed) {
+        audioRef.current.currentTime = 0;
+        audioRef.current.volume = 0.07;
+        setAudioPlayed(true); 
+        audioRef.current.play().catch((err) => {
+          console.warn("No se pudo reproducir el audio:", err);
+        });
+      }
     setUnlockedCount((n) => n + 1);
     setInput("");
     setError(false);
@@ -104,21 +130,22 @@ const handleSubmit = async () => {
             <input
               type="text"
               className="password-input"
-              placeholder="02/05/26 22:00hs"
+              placeholder={currentRiddle?.placeholder ?? ""}  
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
               autoComplete="off"
               spellCheck={false}
-              disabled
+              
             />
             <button className="password-submit" onClick={handleSubmit}>→</button>
           </div>
-          {error && <p className="password-error">esperame..</p>}
+          {error && <p className="password-error">Ey no :c</p>}
         </div>
       )}
 
-      {allDone && <p className="password-done">Has encontrado todo 🌌</p>}
+      <audio ref={audioRef} src="/Sleep_Token-Dangerous.mp3" preload="auto" />
+      {allDone && <p className="password-done ">solo un dia mas tu lado y asi cada dia de mi vida..</p>}
     </div>
   );
 }
