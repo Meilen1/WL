@@ -35,7 +35,7 @@ Ya no hay tiempo.
 
 Como último acto de amor, voy a creerte de nuevo, aunque todo esté tan oscuro allá abajo y mis pies sientan el frío profundo de esa oscuridad. Cuando llegue al fondo, voy a recordar el frío de tus manos y cómo tu voz jamás dejó de sonar cálida al decir mi nombre.
 
-Ahora mis ojos están negros; se tiñeron hasta lo más blanco. Mi memoria desaparece tan fácilmente con todo lo demás, pero permanecen cada mañana en la que desperté y recordé tu nombre antes que el mío. Ojalá te hayan llegado, como a mí, todos los “buenos días”; no había día en que no me llegaran.
+Ahora mis ojos están negros; se tiñeron hasta lo más blanco. Mi memoria desaparece tan fácilmente con todo lo demás, pero permanece cada mañana en la que desperté y recordé tu nombre antes que el mío. Ojalá te hayan llegado, como a mí, todos los “buenos días”; no había día en que no me llegaran.
 
 Quise amarte con intensidad. ¿Lo logré? Ojalá hayas podido sentir aunque sea una parte de todo lo lindo que me hiciste sentir.`,
     password: "a3597b17551a0ad22f82a8096b407cec9b8886fe2f5eb2bcbff96b6774ed8f56",
